@@ -4,7 +4,82 @@
 
 Since childhood, the world of football has fascinated me not only on the field but also in the intricate patterns of data it weaves. Discovering Streamlit felt like finding a hidden treasure, offering the power to transform football team data into vibrant visual stories. Hence, this stranlit football lightware web is made for my dream which comes true! This Sports Insights Application is designed to offer users comprehensive statistics and insights into sports teams, encompassing details such as wins, losses, scores, and dynamic performance graphs. Users have the ability to search for sports teams, access in-depth statistics, delve into dynamic performance word clouds, and export specific team statistics or performance videos from various games.
 
-## 2. Description of the REST API(s)
+## 2. Setup and Installation
+
+### Prerequisites
+- Python 3.9 or higher
+- pip (Python package installer)
+
+### Installation Steps
+
+#### Using a Virtual Environment (Recommended)
+
+Using a virtual environment is recommended to avoid conflicts with other Python packages and ensure a clean installation.
+
+**For Windows:**
+```bash
+# Create a virtual environment
+python -m venv venv
+
+# Activate the virtual environment
+venv\Scripts\activate
+
+# Your command prompt should now show (venv) at the beginning
+```
+
+**For macOS/Linux:**
+```bash
+# Create a virtual environment
+python3 -m venv venv
+
+# Activate the virtual environment
+source venv/bin/activate
+
+# Your terminal should now show (venv) at the beginning
+```
+
+#### Installation Process
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/yourusername/Streamlit-Soccer-Plantform.git
+   cd Streamlit-Soccer-Plantform
+   ```
+
+2. Install the required dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. Create a `.env` file in the root directory with your API keys:
+   ```
+   # Football Data API Key - Get yours at https://www.football-data.org/
+   FOOTBALL_DATA_API_KEY=your_football_data_api_key
+
+   # ScoreBat API Key - Get yours at https://www.scorebat.com/video-api/
+   SCOREBAT_API_KEY=your_scorebat_api_key
+   ```
+
+   You can sign up for free API keys at:
+   - [Football Data API](https://www.football-data.org/client/register)
+   - [ScoreBat Video API](https://www.scorebat.com/video-api/)
+
+### Running the Application
+Run the application with the following command:
+```bash
+streamlit run app.py
+```
+
+The application will open in your default web browser at `http://localhost:8501`.
+
+### Deactivating the Virtual Environment
+When you're done using the application, you can deactivate the virtual environment:
+
+```bash
+deactivate
+```
+
+## 3. Description of the REST API(s)
 
 ### Football Data API
 
@@ -18,7 +93,7 @@ Since childhood, the world of football has fascinated me not only on the field b
 - **Documentation:** [ScoreBat Video API Documentation](https://www.scorebat.com/video-api/documentation/)
 - **Description:** Fetch game highlight data to be associated with the Dynamic Performance Graphs feature, providing users with visual insights into team performance over time.
 
-## 3. List of Features
+## 4. List of Features
 
 ### Feature: Team Search and Display
 
@@ -29,7 +104,7 @@ Since childhood, the world of football has fascinated me not only on the field b
 
 ### Feature: Dynamic Performance Word Cloud
 
-- **Description:** Display dynamic word clouds representing the team’s or league’s keywords over time for trend analysis.
+- **Description:** Display dynamic word clouds representing the team's or league's keywords over time for trend analysis.
 - **Data Class:** `PerformanceWordCloud`
 - **REST API Endpoint:** `amueller.github.io/word_cloud/index.html`
 - **Pages:** `search_page`
@@ -41,18 +116,18 @@ Since childhood, the world of football has fascinated me not only on the field b
 - **REST API Endpoint:** `/video-api/v3/feed`
 - **Pages:** `watch_page`
 
-## 4. References
+## 5. References
 
 - [Football Data API Documentation](https://www.football-data.org/documentation)
 - [ScoreBat Video API Documentation](https://www.scorebat.com/video-api/documentation/)
 - [Premier-League-2022-2023-Streamlit-App](https://github.com/TheOX027/Premier-League-2022-2023-Streamlit-App)
 - [streamlit-datastrike](https://github.com/Bakero08/streamlit-datastrike)
 
-## 5. Code Highlights
+## 6. Code Highlights
 
-In the implementation of our football data application, several key aspects stood out: Firstly, I enhance the page by incorporating hyperlinks and widgets to showcase the various functions. Secondly, we distribute the functions across different pages using widgets, ensuring a comprehensive presentation. Additionally, we employ word cloud visualization to depict keywords within the JSON file, fostering a more user-friendly interaction with the data. The presentation of each league’s quantity, format, league table, team details, and top scorers follows a structured hierarchy, providing an organized display. Furthermore, a data export function is integrated, aiding users in comprehending and managing the data effectively. Lastly, the distinctive feature of watching matches and video highlights through the streamlined platform enhances user interaction, offering a unique and engaging experience.
+In the implementation of our football data application, several key aspects stood out: Firstly, I enhance the page by incorporating hyperlinks and widgets to showcase the various functions. Secondly, we distribute the functions across different pages using widgets, ensuring a comprehensive presentation. Additionally, we employ word cloud visualization to depict keywords within the JSON file, fostering a more user-friendly interaction with the data. The presentation of each league's quantity, format, league table, team details, and top scorers follows a structured hierarchy, providing an organized display. Furthermore, a data export function is integrated, aiding users in comprehending and managing the data effectively. Lastly, the distinctive feature of watching matches and video highlights through the streamlined platform enhances user interaction, offering a unique and engaging experience.
 
-## 6. Next Steps
+## 7. Next Steps
 
 Considering the current state of our application, several potential improvements and enhancements could be made:
 
@@ -60,6 +135,6 @@ Considering the current state of our application, several potential improvements
 (2)Data Visualization: Implement data visualization features, such as graphs and charts, to provide users with a more comprehensive view of football-related statistics.
 (3)User Authentication: Introduce user authentication to enable personalized features and preferences.
 
-## 7. Reflection
+## 8. Reflection
 
 Engaging in this project has truly been a priceless learning journey. The aspect that posed the greatest challenge revolved around establishing robust testing procedures, particularly in the realm of external APIs. Yet, surmounting these hurdles and accomplishing successful mocking for testing brought about a deeply gratifying sense of achievement. Reflecting on this experience, if granted the opportunity to tackle the project anew, I would prioritize early testing even more and explore additional features to enhance the overall user experience.
