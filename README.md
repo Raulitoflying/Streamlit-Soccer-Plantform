@@ -4,6 +4,9 @@
 
 Since childhood, the world of football has fascinated me not only on the field but also in the intricate patterns of data it weaves. Discovering Streamlit felt like finding a hidden treasure, offering the power to transform football team data into vibrant visual stories. Hence, this stranlit football lightware web is made for my dream which comes true! This Sports Insights Application is designed to offer users comprehensive statistics and insights into sports teams, encompassing details such as wins, losses, scores, and dynamic performance graphs. Users have the ability to search for sports teams, access in-depth statistics, delve into dynamic performance word clouds, and export specific team statistics or performance videos from various games.
 
+### Live Demo
+The application is deployed and accessible online at: [https://raulitoflyingsoccerplantform.streamlit.app/](https://raulitoflyingsoccerplantform.streamlit.app/)
+
 ## 2. Setup and Installation
 
 ### Prerequisites
