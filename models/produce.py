@@ -1,8 +1,4 @@
-"""
-models_produce.py from Yixiang Zhou
 
-5001 final project for final submission
-"""
 import csv
 import pandas as pd
 

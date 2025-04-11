@@ -1,8 +1,4 @@
-"""
-models_video.py from Yixiang Zhou
 
-5001 final project for final submission
-"""
 import os
 import time
 import requests

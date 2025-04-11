@@ -1,8 +1,3 @@
-"""
-app.py from Yixiang Zhou
-
-5001 final project for final submission
-"""
 import streamlit as st
 from streamlit_extras.switch_page_button import switch_page
 

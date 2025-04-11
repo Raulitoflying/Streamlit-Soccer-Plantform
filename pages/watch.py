@@ -1,8 +1,4 @@
-"""
-pages_watch.py from Yixiang Zhou
 
-5001 final project for final submission
-"""
 from models.video import ScoreBatVideoAPI
 import streamlit as st
 from streamlit_extras.switch_page_button import switch_page

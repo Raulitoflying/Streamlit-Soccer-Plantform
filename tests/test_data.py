@@ -1,8 +1,4 @@
-"""
-tests_show.py from Yixiang Zhou
 
-5001 final project for final submission
-"""
 import pytest
 from unittest.mock import patch
 import requests

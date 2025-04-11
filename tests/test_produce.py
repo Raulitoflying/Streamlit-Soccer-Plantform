@@ -1,8 +1,4 @@
-"""
-tests_produce.py from Yixiang Zhou
 
-5001 final project for final submission
-"""
 import pandas as pd
 import pytest
 from models.produce import DataExporter

@@ -1,8 +1,4 @@
-"""
-pages_search.py from Yixiang Zhou
 
-5001 final project for final submission
-"""
 import streamlit as st
 import pandas as pd
 import seaborn as sns
