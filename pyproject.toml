@@ -1,0 +1,9 @@
+[tool.black]
+line-length = 120
+
+[tool.autopep8]
+max_line_length = 120
+ignore = ["E501"]
+
+[tool.pylint.messages_control]
+disable = ["line-too-long"]

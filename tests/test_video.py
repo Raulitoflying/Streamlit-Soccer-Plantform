@@ -13,7 +13,7 @@ def test_get_recent_video_success():
     This test uses a mock HTTP GET request to simulate a successful response,
     and checks whether the 'video_data' attribute is correctly updated.
     """
-    video = ScoreBatVideoAPI()
+    video = ScoreBatVideoAPI(api_token='test-token')
     with patch('models.video.requests.get') as mock_get:
         mock_get.return_value.status_code = 200
         mock_get.return_value.json.return_value = {'response': [{'video_data': 'example'}]}
@@ -29,7 +29,7 @@ def test_get_recent_video_http_error():
     This test uses a mock HTTP GET request to simulate an HTTP error,
     and checks whether the 'video_data' attribute remains an empty list.
     """
-    video = ScoreBatVideoAPI()
+    video = ScoreBatVideoAPI(api_token='test-token')
     with patch('models.video.requests.get') as mock_get:
         mock_get.side_effect = requests.exceptions.HTTPError()
 
@@ -44,7 +44,7 @@ def test_get_recent_video_connection_error():
     This test uses a mock HTTP GET request to simulate a connection error,
     and checks whether the 'video_data' attribute remains an empty list.
     """
-    video = ScoreBatVideoAPI()
+    video = ScoreBatVideoAPI(api_token='test-token')
     with patch('models.video.requests.get') as mock_get:
         mock_get.side_effect = requests.exceptions.ConnectionError()
 
@@ -59,7 +59,7 @@ def test_get_recent_video_timeout_error():
     This test uses a mock HTTP GET request to simulate a timeout error,
     and checks whether the 'video_data' attribute remains an empty list.
     """
-    video = ScoreBatVideoAPI()
+    video = ScoreBatVideoAPI(api_token='test-token')
     with patch('models.video.requests.get') as mock_get:
         mock_get.side_effect = requests.exceptions.Timeout()
 
@@ -74,7 +74,7 @@ def test_get_recent_video_general_error():
     This test uses a mock HTTP GET request to simulate a general request exception,
     and checks whether the 'video_data' attribute remains an empty list.
     """
-    video = ScoreBatVideoAPI()
+    video = ScoreBatVideoAPI(api_token='test-token')
     with patch('models.video.requests.get') as mock_get:
         mock_get.side_effect = requests.exceptions.RequestException()
 

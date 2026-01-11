@@ -75,6 +75,19 @@ streamlit run app.py
 
 The application will open in your default web browser at `http://localhost:8501`.
 
+#### Apple Silicon (ARM) note
+If you previously installed x86 Python/NumPy, you may see an “incompatible architecture” error on Apple Silicon. To run cleanly on arm64:
+```bash
+# Create an arm64 venv with Homebrew Python 3.12
+python3.12 -m venv .venv
+source .venv/bin/activate
+
+# Install deps and start the app
+pip install -r requirements.txt
+streamlit run app.py
+# or without activating: .venv/bin/streamlit run app.py
+```
+
 ### Deactivating the Virtual Environment
 When you're done using the application, you can deactivate the virtual environment:
 

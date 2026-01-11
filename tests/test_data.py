@@ -13,7 +13,7 @@ def test_fetch_data_general_success():
     This test uses a mock HTTP GET request to simulate a successful data retrieval
     and checks whether the fetched data is correctly assigned to the 'data1' attribute.
     """
-    footballdataapi = FootballDataAPI()
+    footballdataapi = FootballDataAPI(api_token='test-token')
     with patch('models.data.requests.get') as mock_get:
         mock_get.return_value.status_code = 200
         mock_get.return_value.json.return_value = {'some_key': 'some_value'}
@@ -29,7 +29,7 @@ def test_fetch_data_general_http_error():
     This test uses a mock HTTP GET request to simulate an HTTP error,
     and checks whether the 'data1' attribute remains an empty list.
     """
-    footballdataapi = FootballDataAPI()
+    footballdataapi = FootballDataAPI(api_token='test-token')
     with patch('models.data.requests.get') as mock_get:
         mock_get.side_effect = requests.exceptions.HTTPError()
 
@@ -44,7 +44,7 @@ def test_fetch_data_general_connection_error():
     This test uses a mock HTTP GET request to simulate a connection error,
     and checks whether the 'data1' attribute remains an empty list.
     """
-    footballdataapi = FootballDataAPI()
+    footballdataapi = FootballDataAPI(api_token='test-token')
     with patch('models.data.requests.get') as mock_get:
         mock_get.side_effect = requests.exceptions.ConnectionError()
 
@@ -59,7 +59,7 @@ def test_fetch_data_general_timeout_error():
     This test uses a mock HTTP GET request to simulate a timeout error,
     and checks whether the 'data1' attribute remains an empty list.
     """
-    footballdataapi = FootballDataAPI()
+    footballdataapi = FootballDataAPI(api_token='test-token')
     with patch('models.data.requests.get') as mock_get:
         mock_get.side_effect = requests.exceptions.Timeout()
 
@@ -74,7 +74,7 @@ def test_fetch_data_general_general_error():
     This test uses a mock HTTP GET request to simulate a general request exception,
     and checks whether the 'data1' attribute remains an empty list.
     """
-    footballdataapi = FootballDataAPI()
+    footballdataapi = FootballDataAPI(api_token='test-token')
     with patch('models.data.requests.get') as mock_get:
         mock_get.side_effect = requests.exceptions.RequestException()
 
@@ -89,7 +89,7 @@ def test_fetch_data_from_endpoint_success():
     This test uses a mock HTTP GET request to simulate a successful data retrieval
     and checks whether the fetched data is correctly assigned to the 'data2' attribute.
     """
-    footballdataapi = FootballDataAPI()
+    footballdataapi = FootballDataAPI(api_token='test-token')
     with patch('models.data.requests.get') as mock_get:
         mock_get.return_value.status_code = 200
         mock_get.return_value.json.return_value = {'some_key': 'some_value'}
@@ -105,7 +105,7 @@ def test_fetch_data_from_endpoint_http_error():
     This test uses a mock HTTP GET request to simulate an HTTP error,
     and checks whether the 'data2' attribute remains an empty list.
     """
-    footballdataapi = FootballDataAPI()
+    footballdataapi = FootballDataAPI(api_token='test-token')
     with patch('models.data.requests.get') as mock_get:
         mock_get.side_effect = requests.exceptions.HTTPError()
 
@@ -120,7 +120,7 @@ def test_fetch_data_from_endpoint_connection_error():
     This test uses a mock HTTP GET request to simulate a connection error,
     and checks whether the 'data2' attribute remains an empty list.
     """
-    footballdataapi = FootballDataAPI()
+    footballdataapi = FootballDataAPI(api_token='test-token')
     with patch('models.data.requests.get') as mock_get:
         mock_get.side_effect = requests.exceptions.ConnectionError()
 
@@ -135,7 +135,7 @@ def test_fetch_data_from_endpoint_timeout_error():
     This test uses a mock HTTP GET request to simulate a timeout error,
     and checks whether the 'data2' attribute remains an empty list.
     """
-    footballdataapi = FootballDataAPI()
+    footballdataapi = FootballDataAPI(api_token='test-token')
     with patch('models.data.requests.get') as mock_get:
         mock_get.side_effect = requests.exceptions.Timeout()
 
@@ -150,7 +150,7 @@ def test_fetch_data_from_endpoint_general_error():
     This test uses a mock HTTP GET request to simulate a general request exception,
     and checks whether the 'data2' attribute remains an empty list.
     """
-    footballdataapi = FootballDataAPI()
+    footballdataapi = FootballDataAPI(api_token='test-token')
     with patch('models.data.requests.get') as mock_get:
         mock_get.side_effect = requests.exceptions.RequestException()
 
@@ -165,7 +165,7 @@ def test_fetch_data_from_new_urlversion_success():
     This test uses a mock HTTP GET request to simulate a successful data retrieval
     and checks whether the fetched data is correctly assigned to the 'data3' attribute.
     """
-    footballdataapi = FootballDataAPI()
+    footballdataapi = FootballDataAPI(api_token='test-token')
     with patch('models.data.requests.get') as mock_get:
         mock_get.return_value.status_code = 200
         mock_get.return_value.json.return_value = {'some_key': 'some_value'}
@@ -181,7 +181,7 @@ def test_fetch_data_from_new_urlversion_http_error():
     This test uses a mock HTTP GET request to simulate an HTTP error,
     and checks whether the 'data3' attribute remains an empty list.
     """
-    footballdataapi = FootballDataAPI()
+    footballdataapi = FootballDataAPI(api_token='test-token')
     with patch('models.data.requests.get') as mock_get:
         mock_get.side_effect = requests.exceptions.HTTPError()
 
@@ -196,7 +196,7 @@ def test_fetch_data_from_new_urlversion_connection_error():
     This test uses a mock HTTP GET request to simulate a connection error,
     and checks whether the 'data3' attribute remains an empty list.
     """
-    footballdataapi = FootballDataAPI()
+    footballdataapi = FootballDataAPI(api_token='test-token')
     with patch('models.data.requests.get') as mock_get:
         mock_get.side_effect = requests.exceptions.ConnectionError()
 
@@ -211,7 +211,7 @@ def test_fetch_data_from_new_urlversion_timeout_error():
     This test uses a mock HTTP GET request to simulate a timeout error,
     and checks whether the 'data3' attribute remains an empty list.
     """
-    footballdataapi = FootballDataAPI()
+    footballdataapi = FootballDataAPI(api_token='test-token')
     with patch('models.data.requests.get') as mock_get:
         mock_get.side_effect = requests.exceptions.Timeout()
 
@@ -226,7 +226,7 @@ def test_fetch_data_from_new_urlversion_general_error():
     This test uses a mock HTTP GET request to simulate a general request exception,
     and checks whether the 'data3' attribute remains an empty list.
     """
-    footballdataapi = FootballDataAPI()
+    footballdataapi = FootballDataAPI(api_token='test-token')
     with patch('models.data.requests.get') as mock_get:
         mock_get.side_effect = requests.exceptions.RequestException()
 

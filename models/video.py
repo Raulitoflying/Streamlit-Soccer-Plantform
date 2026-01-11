@@ -21,29 +21,32 @@ class ScoreBatVideoAPI:
         retry_delay (float): Base delay between retry attempts in seconds.
 
     Methods:
-        __init__(_self):
+        __init__(self):
             Initializes an instance of the ScoreBatVideoAPI class.
 
-        get_recent_video(_self):
+        get_recent_video(self):
             Fetches recent feed videos from the ScoreBat Video API.
 
     """
-    def __init__(_self):
+    def __init__(self, api_token=None):
         """
         Initializes an instance of the ScoreBatVideoAPI class.
         """
-        _self.video_data = []
-        _self.api_token = os.getenv('SCOREBAT_API_KEY')
-        _self.request_delay = 1.0  # 1 second delay between requests
-        _self.max_retries = 3      # Maximum retry attempts
-        _self.retry_delay = 3.0    # 3 seconds retry delay
-        
-        if not _self.api_token:
-            st.error("ScoreBat API key not found. Please set "
-                     "SCOREBAT_API_KEY in your .env file.")
-            st.stop()
+        self.video_data = []
+        # allow injection for tests; fallback to env var or st.secrets
+        self.api_token = (
+            api_token
+            or os.getenv('SCOREBAT_API_KEY')
+            or (st.secrets.get('SCOREBAT_API_KEY') if hasattr(st, 'secrets') else None)
+        )
+        self.request_delay = 1.0  # 1 second delay between requests
+        self.max_retries = 3      # Maximum retry attempts
+        self.retry_delay = 3.0    # 3 seconds retry delay
 
-    def _make_request(_self, url, retries=0):
+        if not self.api_token:
+            st.error("⚠️ ScoreBat API key not found. Please set SCOREBAT_API_KEY in env or st.secrets.")
+
+    def _make_request(self, url, retries=0):
         """
         Makes an API request with rate limiting and error handling.
 
@@ -55,63 +58,70 @@ class ScoreBatVideoAPI:
             dict: The JSON response from the API or None if an error occurs.
         """
         # Apply rate limiting delay
-        time.sleep(_self.request_delay)
-        
+        time.sleep(self.request_delay)
+
         try:
-            response = requests.get(url)
-            
+            response = requests.get(url, timeout=10)
+
             # Handle rate limiting or service errors
             if response.status_code in [429, 500, 502, 503, 504]:
-                if retries < _self.max_retries:
-                    wait_time = _self.retry_delay * (retries + 1)
-                    st.warning(f"Service issue or rate limit reached. "
+                if retries < self.max_retries:
+                    wait_time = self.retry_delay * (retries + 1)
+                    st.warning(f"⏳ Service issue or rate limit reached. "
                                f"Waiting {wait_time} seconds...")
                     time.sleep(wait_time)
-                    return _self._make_request(url, retries + 1)
+                    return self._make_request(url, retries + 1)
                 else:
-                    st.error("Service unavailable. Please try again later.")
+                    st.error("❌ Service unavailable. Please try again later.")
                     return None
-            
+
             # Raise exception for any HTTP error
             response.raise_for_status()
-            
+
             # Return JSON data if successful
             return response.json()
-            
+
         except requests.exceptions.HTTPError as errh:
-            st.error(f"HTTP Error: {errh}")
+            st.error(f"❌ HTTP Error: {errh}")
         except requests.exceptions.ConnectionError as errc:
-            st.error(f"Error Connecting: {errc}")
+            st.error(f"❌ Connection Error: {errc}")
         except requests.exceptions.Timeout as errt:
-            st.error(f"Timeout Error: {errt}")
+            st.error(f"⏱️ Timeout Error: {errt}")
         except requests.exceptions.RequestException as err:
-            st.error(f"Request Error: {err}")
-        
+            st.error(f"❌ Request Error: {err}")
+
         # If retries available, try again
-        if retries < _self.max_retries:
-            wait_time = _self.retry_delay * (retries + 1)
-            st.warning(f"Retrying in {wait_time} seconds...")
+        if retries < self.max_retries:
+            wait_time = self.retry_delay * (retries + 1)
+            st.warning(f"🔄 Retrying in {wait_time} seconds...")
             time.sleep(wait_time)
-            return _self._make_request(url, retries + 1)
-        
+            return self._make_request(url, retries + 1)
+
         return None
 
-    @st.cache_data(ttl=1800, persist=True)
+    @st.cache_data(ttl=1800)
     def get_recent_video(_self):
         """
         Fetches recent feed videos from the ScoreBat Video API.
 
         Returns:
-            list: Fetched video data in list format or empty list if an error 
+            list: Fetched video data in list format or empty list if an error
                  occurs.
         """
+        if not _self.api_token:
+            st.error("❌ SCOREBAT_API_KEY is missing; cannot fetch videos.")
+            _self.video_data = []
+            return []
+
         base_url = "https://www.scorebat.com/video-api/v3/feed/"
         url = f"{base_url}?token={_self.api_token}"
-        
+
         response_data = _self._make_request(url)
-        
+
         if response_data:
             videos_data = response_data.get('response', [])
+            _self.video_data = videos_data
             return videos_data
-        
+
+        _self.video_data = []
         return []
