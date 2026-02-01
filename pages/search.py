@@ -49,6 +49,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+
 # Country code helper for flags
 def get_country_code(nationality):
     """Map nationality names to ISO 3166-1 alpha-2 country codes"""
@@ -67,16 +68,18 @@ def get_country_code(nationality):
         'Ecuador': 'EC', 'Peru': 'PE', 'Paraguay': 'PY', 'Venezuela': 'VE',
         'Iceland': 'IS', 'Finland': 'FI', 'Romania': 'RO', 'Hungary': 'HU',
         'Slovakia': 'SK', 'Slovenia': 'SI', 'Bosnia-Herzegovina': 'BA',
-        'Albania': 'AL', 'North Macedonia': 'MK', 'Montenegro': 'ME',
+        'Bosnia and Herzegovina': 'BA', 'Albania': 'AL', 'North Macedonia': 'MK', 'Montenegro': 'ME',
         'Kosovo': 'XK', 'Russia': 'RU', 'Tunisia': 'TN', 'Iran': 'IR',
-        'Georgia': 'GE', 'South Africa': 'ZA', 'Costa Rica': 'CR', 'Jamaica': 'JM',
+        'Georgia': 'GE', 'Guinea': 'GN', 'South Africa': 'ZA', 'Costa Rica': 'CR', 'Jamaica': 'JM',
         'Mali': 'ML', 'Burkina Faso': 'BF', 'Saudi Arabia': 'SA', 'Qatar': 'QA',
-        'UAE': 'AE', 'Bolivia': 'BO', 'Honduras': 'HN', 'Panama': 'PA',
+        'UAE': 'AE', 'United Arab Emirates': 'AE', 'Bolivia': 'BO', 'Honduras': 'HN', 'Panama': 'PA',
         'El Salvador': 'SV', 'Guatemala': 'GT', 'Trinidad and Tobago': 'TT',
-        'Curaçao': 'CW', 'New Zealand': 'NZ', 'China PR': 'CN', 'India': 'IN',
+        'Curacao': 'CW', 'Curaçao': 'CW', 'New Zealand': 'NZ', 'China PR': 'CN', 'India': 'IN',
         'Thailand': 'TH', 'Vietnam': 'VN', 'Indonesia': 'ID', 'Philippines': 'PH',
         'Malaysia': 'MY'
     }
+    if not nationality:
+        return ''
     return country_codes.get(nationality, '')
 
 
@@ -109,7 +112,7 @@ with st.sidebar.expander('ℹ️ About This Page'):
     st.write('• 📈 League standings and tables')
     st.write('• 📁 Export data to CSV/Excel')
 
-if st.sidebar.button('🏠 Back to Main Page', use_container_width=True):
+if st.sidebar.button('🏠 Back to Main Page', width="stretch"):
     st.switch_page("app.py")
 
 # Load data with spinner
@@ -134,7 +137,7 @@ st.markdown("---")
 # Word Cloud Section
 st.markdown('<p class="section-header">☁️ League Word Cloud</p>', unsafe_allow_html=True)
 
-if st.button("🎨 Generate Word Cloud", use_container_width=True):
+if st.button("🎨 Generate Word Cloud", width="stretch"):
     with st.spinner('Creating word cloud...'):
         words = ' '.join(comp_df['League Name'])
         wordcloud = WordCloud(
@@ -177,7 +180,7 @@ if show_comp_stats:
         col1, col2 = st.columns([2, 3])
 
         with col1:
-            st.dataframe(sub_area_df, use_container_width=True)
+            st.dataframe(sub_area_df, width="stretch")
 
         with col2:
             if sub_area_df.shape[0] > 0:
@@ -194,7 +197,7 @@ if show_comp_stats:
                     height=400,
                     xaxis_tickangle=-45 if len(sub_area_df) > 5 else 0
                 )
-                st.plotly_chart(fig, use_container_width=True)
+                st.plotly_chart(fig, width="stretch")
 
 st.markdown("---")
 
@@ -304,123 +307,123 @@ if svalue != default:
         data2 = scorers_data
 
         if data2 and 'scorers' in data2 and len(data2['scorers']) > 0:
-                st.markdown("### 🎯 Top 10 Scorers")
+            st.markdown("### 🎯 Top 10 Scorers")
 
-                # Create enhanced scorer list with team crest
-                scorer_list = [{
-                    'Rank': idx + 1,
-                    'Name': scorer['player']['name'],
-                    'Position': scorer['player'].get('position', 'N/A'),
-                    'Nationality': scorer['player'].get('nationality', 'N/A'),
-                    'Team': scorer['team']['name'],
-                    'Team_Crest': scorer['team'].get('crest', ''),
-                    'Goals': scorer.get('goals', scorer.get('numberOfGoals', 0))
-                } for idx, scorer in enumerate(data2['scorers'])]
+            # Create enhanced scorer list with team crest
+            scorer_list = [{
+                'Rank': idx + 1,
+                'Name': scorer['player']['name'],
+                'Position': scorer['player'].get('position', 'N/A'),
+                'Nationality': scorer['player'].get('nationality', 'N/A'),
+                'Team': scorer['team']['name'],
+                'Team_Crest': scorer['team'].get('crest', ''),
+                'Goals': scorer.get('goals', scorer.get('numberOfGoals', 0))
+            } for idx, scorer in enumerate(data2['scorers'])]
 
-                df = pd.DataFrame(scorer_list)
+            df = pd.DataFrame(scorer_list)
 
-                # Display scorers with team crests
-                st.markdown("#### 🏅 Top Scorers Table")
+            # Display scorers with team crests
+            st.markdown("#### 🏅 Top Scorers Table")
 
-                # Table header
-                header_cols = st.columns([0.5, 3, 0.4, 1.4, 0.5, 2.5, 1])
-                headers = ['#', 'Player', '', 'Nationality', '', 'Team', 'Goals']
-                for col, header in zip(header_cols, headers):
-                    with col:
-                        st.markdown(f"**{header}**")
+            # Table header
+            header_cols = st.columns([0.5, 3, 0.4, 1.4, 0.5, 2.5, 1])
+            headers = ['#', 'Player', '', 'Nationality', '', 'Team', 'Goals']
+            for col, header in zip(header_cols, headers):
+                with col:
+                    st.markdown(f"**{header}**")
 
-                st.markdown("---")
+            st.markdown("---")
 
-                # Table rows
-                for idx, row in df.head(10).iterrows():
-                    col1, col2, col3, col4, col5, col6, col7 = st.columns([0.5, 3, 0.4, 1.4, 0.5, 2.5, 1])
+            # Table rows
+            for idx, row in df.head(10).iterrows():
+                col1, col2, col3, col4, col5, col6, col7 = st.columns([0.5, 3, 0.4, 1.4, 0.5, 2.5, 1])
 
-                    # Rank coloring
-                    rank = row['Rank']
-                    if rank == 1:
-                        rank_color = "#FFD700"  # Gold
-                    elif rank == 2:
-                        rank_color = "#C0C0C0"  # Silver
-                    elif rank == 3:
-                        rank_color = "#CD7F32"  # Bronze
-                    else:
-                        rank_color = "#6c757d"  # Gray
+                # Rank coloring
+                rank = row['Rank']
+                if rank == 1:
+                    rank_color = "#FFD700"  # Gold
+                elif rank == 2:
+                    rank_color = "#C0C0C0"  # Silver
+                elif rank == 3:
+                    rank_color = "#CD7F32"  # Bronze
+                else:
+                    rank_color = "#6c757d"  # Gray
 
-                    with col1:
-                        st.markdown(f'<div style="color: {rank_color}; font-size: 1.2em; font-weight: bold; text-align: center;">{row["Rank"]}</div>', unsafe_allow_html=True)
-                    with col2:
-                        st.markdown(f"**{row['Name']}**")
-                    with col3:
-                        # Display country flag using flagcdn.com
-                        country_code = get_country_code(row['Nationality'])
-                        if country_code:
-                            flag_url = f"https://flagcdn.com/w40/{country_code.lower()}.png"
-                            st.markdown(f'<img src="{flag_url}" width="30" style="border-radius: 3px;">', unsafe_allow_html=True)
-                    with col4:
-                        st.write(row['Nationality'])
-                    with col5:
-                        if row['Team_Crest']:
-                            st.image(row['Team_Crest'], width=30)
-                    with col6:
-                        st.write(row['Team'])
-                    with col7:
-                        st.markdown(f'<div style="background-color: #28a745; color: white; padding: 5px; border-radius: 5px; text-align: center; font-weight: bold;">{row["Goals"]}</div>', unsafe_allow_html=True)
-
-                st.markdown("---")
-
-                # Also show the dataframe for export purposes (hidden in expander)
-                with st.expander("📋 View as Table"):
-                    df_display = df.drop(['Team_Crest', 'Position'], axis=1)
-                    st.dataframe(df_display, use_container_width=True)
-
-                # Visualization (only if we have data)
-                if not df.empty:
-                    st.markdown("#### 📊 Goals Distribution")
-                    fig = px.bar(
-                        df.head(10),
-                        x='Name',
-                        y='Goals',
-                        color='Goals',
-                        title='Top 10 Goal Scorers - Goals Comparison',
-                        color_continuous_scale='reds',
-                        labels={'Goals': 'Goals Scored', 'Name': 'Player'},
-                        text='Goals'
-                    )
-                    fig.update_traces(textposition='outside')
-                    fig.update_layout(xaxis_tickangle=-45, height=400, showlegend=False)
-                    st.plotly_chart(fig, use_container_width=True)
-
-                # Export options
-                export_list = [{k: v for k, v in scorer.items() if k != 'Team_Crest'} for scorer in scorer_list]
-                exporter = DataExporter(export_list)
-                col1, col2 = st.columns(2)
                 with col1:
-                    csv_result = exporter.export_to_csv()
-                    if csv_result["success"]:
-                        st.download_button(
-                            "📥 Download CSV",
-                            data=csv_result["data"],
-                            file_name="scorer_data.csv",
-                            mime="text/csv",
-                            use_container_width=True,
-                            key='scorers_csv'
-                        )
-                    else:
-                        st.warning(csv_result["message"])
-
+                    st.markdown(f'<div style="color: {rank_color}; font-size: 1.2em; font-weight: bold; text-align: center;">{row["Rank"]}</div>', unsafe_allow_html=True)
                 with col2:
-                    excel_result = exporter.export_to_excel()
-                    if excel_result["success"]:
-                        st.download_button(
-                            "📥 Download Excel",
-                            data=excel_result["data"],
-                            file_name="scorer_data.xlsx",
-                            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                            use_container_width=True,
-                            key='scorers_excel'
-                        )
-                    else:
-                        st.warning(excel_result["message"])
+                    st.markdown(f"**{row['Name']}**")
+                with col3:
+                    # Display country flag using flagcdn.com
+                    country_code = get_country_code(row['Nationality'])
+                    if country_code:
+                        flag_url = f"https://flagcdn.com/w40/{country_code.lower()}.png"
+                        st.markdown(f'<img src="{flag_url}" width="30" style="border-radius: 3px;">', unsafe_allow_html=True)
+                with col4:
+                    st.write(row['Nationality'])
+                with col5:
+                    if row['Team_Crest']:
+                        st.image(row['Team_Crest'], width=30)
+                with col6:
+                    st.write(row['Team'])
+                with col7:
+                    st.markdown(f'<div style="background-color: #28a745; color: white; padding: 5px; border-radius: 5px; text-align: center; font-weight: bold;">{row["Goals"]}</div>', unsafe_allow_html=True)
+
+            st.markdown("---")
+
+            # Also show the dataframe for export purposes (hidden in expander)
+            with st.expander("📋 View as Table"):
+                df_display = df.drop(['Team_Crest', 'Position'], axis=1)
+                st.dataframe(df_display, width="stretch")
+
+            # Visualization (only if we have data)
+            if not df.empty:
+                st.markdown("#### 📊 Goals Distribution")
+                fig = px.bar(
+                    df.head(10),
+                    x='Name',
+                    y='Goals',
+                    color='Goals',
+                    title='Top 10 Goal Scorers - Goals Comparison',
+                    color_continuous_scale='reds',
+                    labels={'Goals': 'Goals Scored', 'Name': 'Player'},
+                    text='Goals'
+                )
+                fig.update_traces(textposition='outside')
+                fig.update_layout(xaxis_tickangle=-45, height=400, showlegend=False)
+                st.plotly_chart(fig, width="stretch")
+
+            # Export options
+            export_list = [{k: v for k, v in scorer.items() if k != 'Team_Crest'} for scorer in scorer_list]
+            exporter = DataExporter(export_list)
+            col1, col2 = st.columns(2)
+            with col1:
+                csv_result = exporter.export_to_csv()
+                if csv_result["success"]:
+                    st.download_button(
+                        "📥 Download CSV",
+                        data=csv_result["data"],
+                        file_name="scorer_data.csv",
+                        mime="text/csv",
+                        width="stretch",
+                        key='scorers_csv'
+                    )
+                else:
+                    st.warning(csv_result["message"])
+
+            with col2:
+                excel_result = exporter.export_to_excel()
+                if excel_result["success"]:
+                    st.download_button(
+                        "📥 Download Excel",
+                        data=excel_result["data"],
+                        file_name="scorer_data.xlsx",
+                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                        width="stretch",
+                        key='scorers_excel'
+                    )
+                else:
+                    st.warning(excel_result["message"])
         else:
             st.warning("⚠️ Scorer data not available for this competition")
 
@@ -594,7 +597,7 @@ if st.sidebar.checkbox('📈 League Standings'):
                     # Also show the dataframe for export purposes (hidden in expander)
                     with st.expander("📋 View as Table"):
                         df_display = df.drop('Crest', axis=1)
-                        st.dataframe(df_display, use_container_width=True)
+                        st.dataframe(df_display, width="stretch")
 
                     # Visualization (only if we have data)
                     if not df.empty:
@@ -637,7 +640,7 @@ if st.sidebar.checkbox('📈 League Standings'):
                             yaxis_title="Points"
                         )
 
-                        st.plotly_chart(fig, use_container_width=True)
+                        st.plotly_chart(fig, width="stretch")
 
                         # Legend explanation
                         st.markdown("""
@@ -684,7 +687,7 @@ if st.sidebar.checkbox('📈 League Standings'):
                             data=csv_result["data"],
                             file_name="standings_data.csv",
                             mime="text/csv",
-                            use_container_width=True
+                            width="stretch"
                         )
                     else:
                         st.warning(csv_result["message"])
@@ -697,7 +700,7 @@ if st.sidebar.checkbox('📈 League Standings'):
                             data=excel_result["data"],
                             file_name="standings_data.xlsx",
                             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                            use_container_width=True
+                            width="stretch"
                         )
                     else:
                         st.warning(excel_result["message"])
@@ -726,8 +729,15 @@ if show_matches:
 
     date_from, date_to = (None, None)
     if isinstance(date_range, tuple) and len(date_range) == 2:
-        date_from = date_range[0].isoformat() if date_range[0] else None
-        date_to = date_range[1].isoformat() if date_range[1] else None
+        start_date = date_range[0]
+        end_date = date_range[1]
+        if start_date and end_date:
+            max_end = start_date + dt.timedelta(days=10)
+            if end_date > max_end:
+                st.warning("Date range exceeds 10 days. End date has been adjusted to match the API limit.")
+                end_date = max_end
+        date_from = start_date.isoformat() if start_date else None
+        date_to = end_date.isoformat() if end_date else None
 
     with st.spinner("Loading matches..."):
         matches_resp = data.fetch_matches(
@@ -741,18 +751,59 @@ if show_matches:
 
     matches = matches_resp.get("matches", [])
     if matches:
-        match_rows = []
+        # Custom table so Home/Away can include crest + name in a single column
+        header_cols = st.columns([2.2, 1.6, 2.2, 2.2, 1.2, 1.0])
+        headers = ["Date", "Competition", "Home", "Away", "Status", "Score"]
+        for col, header in zip(header_cols, headers):
+            with col:
+                st.markdown(f"**{header}**")
+
+        st.markdown("---")
+
         for m in matches:
-            match_rows.append({
-                "Date": m.get("utcDate", ""),
-                "Competition": m.get("competition", {}).get("name", ""),
-                "Home": m.get("homeTeam", {}).get("name", ""),
-                "Away": m.get("awayTeam", {}).get("name", ""),
-                "Status": m.get("status", ""),
-                "Score": f"{m.get('score', {}).get('fullTime', {}).get('home', '')} - {m.get('score', {}).get('fullTime', {}).get('away', '')}"
-            })
-        match_df = pd.DataFrame(match_rows)
-        st.dataframe(match_df, use_container_width=True)
+            home_team = m.get("homeTeam", {}) or {}
+            away_team = m.get("awayTeam", {}) or {}
+            home_crest = home_team.get("crest", "")
+            away_crest = away_team.get("crest", "")
+            home_name = home_team.get("name", "")
+            away_name = away_team.get("name", "")
+
+            row_cols = st.columns([2.2, 1.6, 2.2, 2.2, 1.2, 1.0])
+            with row_cols[0]:
+                st.write(m.get("utcDate", ""))
+            with row_cols[1]:
+                st.write(m.get("competition", {}).get("name", ""))
+            with row_cols[2]:
+                if home_crest:
+                    st.markdown(
+                        f'<div style="display:flex; align-items:center; gap:8px;">'
+                        f'<span style="display:inline-flex; align-items:center; justify-content:center; '
+                        f'background:#ffffff; border-radius:50%; width:26px; height:26px; '
+                        f'box-shadow:0 0 0 1px rgba(0,0,0,0.2);">'
+                        f'<img src="{home_crest}" width="20" height="20" /></span>'
+                        f'<span>{home_name}</span></div>',
+                        unsafe_allow_html=True
+                    )
+                else:
+                    st.write(home_name)
+            with row_cols[3]:
+                if away_crest:
+                    st.markdown(
+                        f'<div style="display:flex; align-items:center; gap:8px;">'
+                        f'<span style="display:inline-flex; align-items:center; justify-content:center; '
+                        f'background:#ffffff; border-radius:50%; width:26px; height:26px; '
+                        f'box-shadow:0 0 0 1px rgba(0,0,0,0.2);">'
+                        f'<img src="{away_crest}" width="20" height="20" /></span>'
+                        f'<span>{away_name}</span></div>',
+                        unsafe_allow_html=True
+                    )
+                else:
+                    st.write(away_name)
+            with row_cols[4]:
+                st.write(m.get("status", ""))
+            with row_cols[5]:
+                score = m.get("score", {}).get("fullTime", {})
+                st.write(f"{score.get('home', '')} - {score.get('away', '')}")
     else:
         st.info("No matches found for the selected filters.")
 
