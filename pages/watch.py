@@ -47,7 +47,7 @@ st.markdown("### Watch the latest goals and match highlights from top competitio
 
 # Hero image
 image_url = 'https://cdn.pixabay.com/photo/2013/12/12/21/48/football-stadium-227561_1280.jpg'
-st.image(image_url, use_container_width=True)
+st.image(image_url, width="stretch")
 
 # Sidebar
 st.sidebar.title('🎬 Video Section')
@@ -59,13 +59,13 @@ with st.sidebar.expander('ℹ️ About This Page'):
     st.write('• ⚽ Goals and key moments')
     st.write('• 🏆 Coverage from major competitions')
 
-if st.sidebar.button('🏠 Back to Main Page', use_container_width=True):
+if st.sidebar.button('🏠 Back to Main Page', width="stretch"):
     st.switch_page("app.py")
 
 st.markdown("---")
 
 # Main content
-if st.button("🎬 Fetch Latest Highlights", use_container_width=True, type="primary"):
+if st.button("🎬 Fetch Latest Highlights", width="stretch", type="primary"):
     with st.spinner('🔄 Loading latest match highlights...'):
         try:
             my_video = ScoreBatVideoAPI()
@@ -92,11 +92,11 @@ if st.button("🎬 Fetch Latest Highlights", use_container_width=True, type="pri
 
                         with col1:
                             if thumbnail:
-                                st.image(thumbnail, use_container_width=True)
+                                st.image(thumbnail, width="stretch")
                             st.markdown(f'<span class="competition-badge">{competition}</span>', unsafe_allow_html=True)
                             st.markdown(f'<p class="date-info">📅 {date}</p>', unsafe_allow_html=True)
                             if matchview_url and matchview_url != '#':
-                                st.link_button("🔗 Full Match Details", matchview_url, use_container_width=True)
+                                st.link_button("🔗 Full Match Details", matchview_url, width="stretch")
 
                         with col2:
                             if videos:
