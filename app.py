@@ -82,7 +82,7 @@ st.markdown('<p class="sub-header">Your Gateway to Football Data & Highlights</p
 
 # Hero image
 image_url = 'https://cdn.pixabay.com/photo/2016/09/18/20/47/football-1678992_1280.jpg'
-st.image(image_url, use_container_width=True)
+st.image(image_url, width="stretch")
 
 # Feature cards
 col1, col2 = st.columns(2)
@@ -94,7 +94,7 @@ with col1:
             <p>Explore comprehensive football statistics, team info, standings, and top scorers from leagues worldwide.</p>
         </div>
     """, unsafe_allow_html=True)
-    if st.button("🔍 Explore Stats", use_container_width=True, type="primary"):
+    if st.button("🔍 Explore Stats", width="stretch", type="primary"):
         st.switch_page("pages/search.py")
 
 with col2:
@@ -104,7 +104,7 @@ with col2:
             <p>Watch the latest match highlights and goals from top football competitions around the world.</p>
         </div>
     """, unsafe_allow_html=True)
-    if st.button("▶️ Watch Videos", use_container_width=True, type="primary"):
+    if st.button("▶️ Watch Videos", width="stretch", type="primary"):
         st.switch_page("pages/watch.py")
 
 # About section
